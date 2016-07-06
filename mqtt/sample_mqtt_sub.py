@@ -13,6 +13,7 @@ __doc__ = """
 connflag = False
 
 # NOTE: Fill these with appropriate values
+# url to the aws cert is located in the README
 AWS_CERT_PATH = '/path/to/awsCert.pem'
 IOTSKY_PROJECT_CERT_FILE = '/path/to/iotsky/project/cert.pem'
 IOTSKY_PROJECT_PRIVATE_KEY_FILE = '/path/to/iotsky/project/private_key.pem'
