@@ -20,6 +20,7 @@ IOTSKY_PROJECT_PRIVATE_KEY_FILE = '/path/to/iotsky/project/private_key.pem'
 # This will be displayed on the project details page on iotsky.io e.g.
 # 9020198dd518778d384bebb123456789-my_project/*
 IOTSKY_PROJECT_TOPIC = '9020198dd518778d384bebb123456789-my_project/foo'
+CLIENT_ID_SUB = 'YOUR SUBSCRIBE CLIENT ID'
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -50,7 +51,7 @@ def on_disconnect(client, userdata, rc):
 def on_log(client, userdata, level, buf):
     print level, buf
 
-client = mqtt.Client()
+client = mqtt.Client(client_id=CLIENT_ID_SUB)
 client.on_connect = on_connect
 client.on_message = on_message
 client.on_disconnect = on_disconnect
