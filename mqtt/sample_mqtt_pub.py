@@ -1,4 +1,6 @@
+import json
 import paho.mqtt.client as mqtt
+import random
 import ssl
 from time import sleep
 
@@ -60,10 +62,12 @@ client.loop_start()
 while True:
     sleep(0.5)
     if connflag == True:
-        data = 20
-        client.publish(IOTSKY_PROJECT_TOPIC, data, qos=0)
-        print("msg sent: data " + "%.2f" % data )
-        sleep(1)
+        # NOTE: This should always be json data
+        data = {"temp": int(random.randrange(0,100))}
+        client.publish(IOTSKY_PROJECT_TOPIC, json.dumps(data), qos=0)
+        print("msg sent: data " + json.dumps(data))
+        print('sleeping for 60 seconds...')
+        sleep(60)
     else:
         print("waiting for connection...")
 
