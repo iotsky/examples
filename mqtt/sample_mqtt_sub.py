@@ -8,6 +8,9 @@ __doc__ = """
     Then start the subscriber on one terminal and publish from another.
 
     For more details visit iotsky.io
+
+    Ensure that you have the paho mqtt client python lib installed. You can find it here:
+     https://pypi.python.org/pypi/paho-mqtt/1.1
 """
 
 connflag = False
@@ -51,19 +54,25 @@ def on_disconnect(client, userdata, rc):
 def on_log(client, userdata, level, buf):
     print level, buf
 
-client = mqtt.Client(client_id=CLIENT_ID_SUB)
-client.on_connect = on_connect
-client.on_message = on_message
-client.on_disconnect = on_disconnect
-client.on_log = on_log
 
-client.tls_set(AWS_CERT_PATH, certfile=IOTSKY_PROJECT_CERT_FILE,
-               keyfile=IOTSKY_PROJECT_PRIVATE_KEY_FILE, tls_version=ssl.PROTOCOL_TLSv1_2,
-               ciphers='AES256-SHA256', cert_reqs=ssl.CERT_REQUIRED)
-client.connect("A1QA5YMMGWQ50B.iot.us-west-2.amazonaws.com", 8883, 60)
+def main():
+    client = mqtt.Client(client_id=CLIENT_ID_SUB)
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_disconnect = on_disconnect
+    client.on_log = on_log
 
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
-client.loop_forever()
+    client.tls_set(AWS_CERT_PATH, certfile=IOTSKY_PROJECT_CERT_FILE,
+                   keyfile=IOTSKY_PROJECT_PRIVATE_KEY_FILE, tls_version=ssl.PROTOCOL_TLSv1_2,
+                   ciphers='AES256-SHA256', cert_reqs=ssl.CERT_REQUIRED)
+    client.connect("A1QA5YMMGWQ50B.iot.us-west-2.amazonaws.com", 8883, 60)
+
+    # Blocking call that processes network traffic, dispatches callbacks and
+    # handles reconnecting.
+    # Other loop*() functions are available that give a threaded interface and a
+    # manual interface.
+    client.loop_forever()
+
+
+if __name__ == '__main__':
+    main()
